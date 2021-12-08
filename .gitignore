@@ -4,6 +4,9 @@
 # Cache
 .DS_Store
 
+# Binary
+demineirb
+
 # Object files
 *.o
 *.ko
