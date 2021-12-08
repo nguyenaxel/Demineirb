@@ -33,3 +33,29 @@ void draw_board(int nb_box_w, int nb_box_h)
         }
     }
 }
+
+void print_welcome_message()
+{
+    mvprintw(20, 33, "Bienvenue dans le jeu Demin'eirb!");
+    mvprintw(24, 35, "Pour quitter, appuyez sur 'q'.");
+    mvprintw(25, 27, "Pour continuer, appuyez sur une autre touche.");
+    mvprintw(45, 41, "Auteur Axel Nguyen.");
+    mvprintw(47, 45, "Version 0.1");
+    refresh();
+    int c = getch();
+    if(c == 'q')
+    {
+        endwin();
+        exit(0);
+    }
+    for(int i = 0; i < 33; i++)
+        mvdelch(20, 33);
+    for(int i = 0; i < 30; i++)
+        mvdelch(24, 35);
+    for(int i = 0; i < 45; i++)
+        mvdelch(25, 28);
+    for(int i = 0; i < 21; i++)
+        mvdelch(45, 41);
+    for(int i = 0; i < 11; i++)
+        mvdelch(47, 45);
+}

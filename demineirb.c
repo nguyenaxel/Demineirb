@@ -12,6 +12,8 @@ int main(int argc, char *argv[])
     check_term_size(dim);
     curs_set(FALSE);
 
+    print_welcome_message();
+
     draw_board(NB_BOX_W, NB_BOX_H);
 
     char c = getch();
