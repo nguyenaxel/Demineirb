@@ -4,7 +4,7 @@ LDLIBS+=-lncurses
 # Nom de votre executable
 TARGET=demineirb
 # Liste des fichiers nécessaires à sa réalisation
-OBJS=demineirb.o print.o ncurses.o
+OBJS=demineirb.o print.o ncurses.o play.o
 
 # Create dependencies while compiling
 CFLAGS+=-MMD
@@ -18,6 +18,6 @@ clean:
 -include *.d
 
 print : print.o ncurses.o
-demineirb : demineirb.o ncurses.o print.o
+demineirb : demineirb.o ncurses.o print.o play.o
 
 .PHONY: clean clean-deps

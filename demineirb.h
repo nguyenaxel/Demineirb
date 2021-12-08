@@ -14,4 +14,10 @@
 #define WHITE_BLACK     0
 #define MAGENTA_BLACK   6
 
+struct coordonnee
+{
+    int abscisse;
+    int ordonnee;
+};
+
 #endif
