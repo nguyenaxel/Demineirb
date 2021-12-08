@@ -11,4 +11,7 @@
 #define H_BOX  5
 #define MARGIN 1
 
+#define WHITE_BLACK     0
+#define MAGENTA_BLACK   6
+
 #endif

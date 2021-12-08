@@ -59,3 +59,22 @@ void print_welcome_message()
     for(int i = 0; i < 11; i++)
         mvdelch(47, 45);
 }
+
+void init_colors()
+{
+    start_color();
+
+    init_pair(WHITE_BLACK,   COLOR_WHITE,   COLOR_BLACK);
+    init_pair(MAGENTA_BLACK, COLOR_MAGENTA, COLOR_BLACK);
+
+    bkgd(COLOR_PAIR(WHITE_BLACK));
+}
+
+void color_selected_box(int pos_x, int pos_y, short color_pair)
+{
+    WINDOW *boite;
+    boite = subwin(stdscr, H_BOX, W_BOX, MARGIN+H_BOX*pos_y, MARGIN+W_BOX*pos_x);
+    wbkgd(boite, COLOR_PAIR(color_pair));
+    box(boite, ACS_VLINE, ACS_HLINE);
+    wrefresh(boite);
+}
