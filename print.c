@@ -5,6 +5,7 @@
 
 #include "demineirb.h"
 #include "print.h"
+#include "play.h"
 #include "ncurses.h"
 
 void check_term_size(struct dimension dim)
@@ -66,6 +67,7 @@ void init_colors()
 
     init_pair(WHITE_BLACK,   COLOR_WHITE,   COLOR_BLACK);
     init_pair(MAGENTA_BLACK, COLOR_MAGENTA, COLOR_BLACK);
+    init_pair(RED_BLACK,     COLOR_RED,     COLOR_BLACK);
 
     bkgd(COLOR_PAIR(WHITE_BLACK));
 }
@@ -77,4 +79,16 @@ void color_selected_box(int pos_x, int pos_y, short color_pair)
     wbkgd(boite, COLOR_PAIR(color_pair));
     box(boite, ACS_VLINE, ACS_HLINE);
     wrefresh(boite);
+}
+
+void print_test_mine(int (*game_matrice)[NB_BOX_H])
+{
+    for(int i = 0; i < NB_BOX_W; i++)
+    {
+        for(int j = 0; j < NB_BOX_H; j++)
+        {
+            if(game_matrice[i][j] == MINE)
+                color_selected_box(i, j, RED_BLACK);
+        }
+    }
 }

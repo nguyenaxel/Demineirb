@@ -11,13 +11,18 @@ int main(int argc, char *argv[])
 {
     // Initialisation des variables
     int ch; // Charactere clavier lu
-    struct coordonnee C_Matrice = {0,0}; // Coordonnees curseur
+    struct coordonnee C_Matrice = {0,0};    // Coordonnees curseur
+    int player_matrice[NB_BOX_W][NB_BOX_H]; // Matrice vu par le joueur
+    int game_matrice[NB_BOX_W][NB_BOX_H];   // Matrice vu par le jeu
 
     // Initialisation de l'affichage
     struct dimension dim = initialize_screen();
     check_term_size(dim);
     curs_set(FALSE);
     init_colors();
+    init_keyboard();
+    init_player_matrice(player_matrice); // Toutes les cases a UNKNOWN
+    init_game_matrice(game_matrice);     // Toutes les cases a UNKNOWN sauf NB_MINE mines de coordonnées aléatoires
 
     // Affichage du message de bienvenue
     print_welcome_message();
@@ -26,11 +31,13 @@ int main(int argc, char *argv[])
     draw_board(NB_BOX_W, NB_BOX_H);
     color_selected_box(0, 0, MAGENTA_BLACK);
 
+    print_test_mine(game_matrice); // DEBUG affiche les mines vues par le jeu
+
     // Interraction utilisateur
     while(1)
     {
         ch = getch();
-        case_select(ch, &C_Matrice);
+        case_select(ch, &C_Matrice, game_matrice, player_matrice);
     }
 
     // Fin de l'affichage ncurses
