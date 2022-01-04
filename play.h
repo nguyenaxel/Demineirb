@@ -10,6 +10,12 @@ enum case_type
     MINE
 };
 
+enum end_type
+{
+    LOSE,
+    WIN
+};
+
 void init_keyboard();
 int  case_select(int ch, struct coordonnee *C_Matrice, int (*g_matrice)[NB_BOX_H], int (*p_matrice)[NB_BOX_H]);
 void init_player_matrice(int (*player_matrice)[NB_BOX_H]);

@@ -32,6 +32,8 @@ int case_select(int ch, struct coordonnee *C_Matrice, int (*g_matrice)[NB_BOX_H]
         {
             print_mine(g_matrice);
             char c = getch();
+            delete_board();
+            print_end_message(LOSE);
             return 1;
         }
         else if(g_matrice[C_Matrice->abscisse][C_Matrice->ordonnee] == KNOWN)

@@ -16,6 +16,7 @@
 #define WHITE_BLACK     0
 #define MAGENTA_BLACK   1
 #define RED_BLACK       2
+#define BLACK_BLACK     3
 #define BLUE_BLACK      4
 
 struct coordonnee

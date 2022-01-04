@@ -68,6 +68,7 @@ void init_colors()
     init_pair(WHITE_BLACK,   COLOR_WHITE,   COLOR_BLACK);
     init_pair(MAGENTA_BLACK, COLOR_MAGENTA, COLOR_BLACK);
     init_pair(RED_BLACK,     COLOR_RED,     COLOR_BLACK);
+    init_pair(BLACK_BLACK,   COLOR_BLACK,   COLOR_BLACK);
     init_pair(BLUE_BLACK,    COLOR_BLUE,    COLOR_BLACK);
 
     bkgd(COLOR_PAIR(WHITE_BLACK));
@@ -92,4 +93,26 @@ void print_mine(int (*game_matrice)[NB_BOX_H])
                 color_selected_box(i, j, RED_BLACK);
         }
     }
+}
+
+void delete_board()
+{
+    for(int i = 0; i < NB_BOX_W; i++)
+    {
+        for(int j = 0; j < NB_BOX_H; j++)
+        {
+            color_selected_box(i, j, BLACK_BLACK);
+        }
+    }
+}
+
+void print_end_message(short end_type)
+{
+    if(end_type == WIN)
+        mvprintw(20, 33, "Bravo, vous avez gagné!");
+    else if(end_type == LOSE)
+        mvprintw(20, 33, "Dommage, vous avez perdu!");
+
+    refresh();
+    int c = getch();
 }
