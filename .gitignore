@@ -7,6 +7,9 @@
 # Binary
 demineirb
 
+# VScode file
+.vscode
+
 # Object files
 *.o
 *.ko
