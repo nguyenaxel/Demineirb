@@ -31,13 +31,12 @@ int main(int argc, char *argv[])
     draw_board(NB_BOX_W, NB_BOX_H);
     color_selected_box(0, 0, MAGENTA_BLACK);
 
-    print_test_mine(game_matrice); // DEBUG affiche les mines vues par le jeu
-
     // Interraction utilisateur
     while(1)
     {
         ch = getch();
-        case_select(ch, &C_Matrice, game_matrice, player_matrice);
+        if(case_select(ch, &C_Matrice, game_matrice, player_matrice) == 1)
+            break;
     }
 
     // Fin de l'affichage ncurses

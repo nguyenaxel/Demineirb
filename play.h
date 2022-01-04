@@ -6,11 +6,12 @@
 enum case_type
 {
     UNKNOWN,
+    KNOWN,
     MINE
 };
 
 void init_keyboard();
-void case_select(int ch, struct coordonnee *C_Matrice, int (*g_matrice)[NB_BOX_H], int (*p_matrice)[NB_BOX_H]);
+int  case_select(int ch, struct coordonnee *C_Matrice, int (*g_matrice)[NB_BOX_H], int (*p_matrice)[NB_BOX_H]);
 void init_player_matrice(int (*player_matrice)[NB_BOX_H]);
 void init_game_matrice(int (*game_matrice)[NB_BOX_H]);
 

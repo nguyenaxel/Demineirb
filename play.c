@@ -12,19 +12,34 @@ void init_keyboard()
     curs_set(FALSE);
 }
 
-void case_select(int ch, struct coordonnee *C_Matrice, int (*g_matrice)[NB_BOX_H], int (*p_matrice)[NB_BOX_H])
+int case_select(int ch, struct coordonnee *C_Matrice, int (*g_matrice)[NB_BOX_H], int (*p_matrice)[NB_BOX_H])
 {
-
-    if(g_matrice[C_Matrice->abscisse][C_Matrice->ordonnee] == UNKNOWN)
+    if(p_matrice[C_Matrice->abscisse][C_Matrice->ordonnee] == UNKNOWN)
         color_selected_box(C_Matrice->abscisse, C_Matrice->ordonnee, WHITE_BLACK);
-    else if(g_matrice[C_Matrice->abscisse][C_Matrice->ordonnee] == MINE)
+    else if(p_matrice[C_Matrice->abscisse][C_Matrice->ordonnee] == MINE)
         color_selected_box(C_Matrice->abscisse, C_Matrice->ordonnee, RED_BLACK);
+    else if(p_matrice[C_Matrice->abscisse][C_Matrice->ordonnee] == KNOWN)
+        color_selected_box(C_Matrice->abscisse, C_Matrice->ordonnee, BLUE_BLACK);
 
     switch (ch)
     {
     case 'q':
-        endwin();
-        exit(0);
+        return 1;
+        break;
+
+    case ' ':
+        if(g_matrice[C_Matrice->abscisse][C_Matrice->ordonnee] == MINE)
+        {
+            print_mine(g_matrice);
+            char c = getch();
+            return 1;
+        }
+        else if(g_matrice[C_Matrice->abscisse][C_Matrice->ordonnee] == KNOWN)
+        {
+            p_matrice[C_Matrice->abscisse][C_Matrice->ordonnee] = KNOWN;
+            color_selected_box(C_Matrice->abscisse, C_Matrice->ordonnee, BLUE_BLACK);
+            return 0;
+        }
         break;
 
     case KEY_DOWN:
@@ -60,6 +75,8 @@ void case_select(int ch, struct coordonnee *C_Matrice, int (*g_matrice)[NB_BOX_H
     }
 
     color_selected_box(C_Matrice->abscisse, C_Matrice->ordonnee, MAGENTA_BLACK);
+
+    return 0;
 }
 
 void init_player_matrice(int (*player_matrice)[NB_BOX_H])
@@ -77,11 +94,11 @@ void init_game_matrice(int (*game_matrice)[NB_BOX_H])
 {
     srand(time(NULL));   // Initialisation pour la generation de nombres aleatoires
 
-    for(int i = 0; i < NB_BOX_W; i++) // Initialisation de toutes les cases a UNKNOWN
+    for(int i = 0; i < NB_BOX_W; i++) // Initialisation de toutes les cases a KNOWN
     {
         for(int j = 0; j < NB_BOX_H; j++)
         {
-            game_matrice[i][j] = UNKNOWN;
+            game_matrice[i][j] = KNOWN;
         }
     }
 
@@ -92,7 +109,7 @@ void init_game_matrice(int (*game_matrice)[NB_BOX_H])
         {
             r1 = rand() % NB_BOX_W;
             r2 = rand() % NB_BOX_H;
-            if(game_matrice[r1][r2] == UNKNOWN) // Generation aleatoire des coordonnees des NB_MINE 
+            if(game_matrice[r1][r2] == KNOWN) // Generation aleatoire des coordonnees des NB_MINE 
             {
                 game_matrice[r1][r2] = MINE;
                 break;
