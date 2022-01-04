@@ -68,6 +68,7 @@ int case_select(int ch, struct coordonnee *C_Matrice, struct case_ (*g_matrice)[
             {
                 delete_board();
                 print_end_message(WIN);
+                return 1;
                 break;
             }
         }
