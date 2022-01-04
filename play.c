@@ -150,7 +150,7 @@ void init_game_matrice(struct case_ (*game_matrice)[NB_BOX_H])
                     if(r2 > 0)
                         game_matrice[r1-1][r2-1].nb_mine_around++;
 
-                    if(r2 < NB_BOX_H)
+                    if(r2 < NB_BOX_H-1)
                         game_matrice[r1-1][r2+1].nb_mine_around++;
                 }
                 if(r1 < NB_BOX_W)
