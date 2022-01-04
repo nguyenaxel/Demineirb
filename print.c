@@ -33,6 +33,8 @@ void draw_board(int nb_box_w, int nb_box_h)
             wrefresh(boite);
         }
     }
+
+    mvprintw(52, 2, "Mine left : %d", mine_left);
 }
 
 void print_welcome_message()
@@ -83,13 +85,13 @@ void color_selected_box(int pos_x, int pos_y, short color_pair)
     wrefresh(boite);
 }
 
-void print_mine(int (*game_matrice)[NB_BOX_H])
+void print_mine(struct case_ (*game_matrice)[NB_BOX_H])
 {
     for(int i = 0; i < NB_BOX_W; i++)
     {
         for(int j = 0; j < NB_BOX_H; j++)
         {
-            if(game_matrice[i][j] == MINE)
+            if(game_matrice[i][j].type == MINE)
                 color_selected_box(i, j, RED_BLACK);
         }
     }

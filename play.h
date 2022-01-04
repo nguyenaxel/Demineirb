@@ -17,8 +17,8 @@ enum end_type
 };
 
 void init_keyboard();
-int  case_select(int ch, struct coordonnee *C_Matrice, int (*g_matrice)[NB_BOX_H], int (*p_matrice)[NB_BOX_H]);
-void init_player_matrice(int (*player_matrice)[NB_BOX_H]);
-void init_game_matrice(int (*game_matrice)[NB_BOX_H]);
+int  case_select(int ch, struct coordonnee *C_Matrice, struct case_ (*g_matrice)[NB_BOX_H], struct case_ (*p_matrice)[NB_BOX_H]);
+void init_player_matrice(struct case_ (*player_matrice)[NB_BOX_H]);
+void init_game_matrice(struct case_ (*game_matrice)[NB_BOX_H]);
 
 #endif

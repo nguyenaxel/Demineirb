@@ -12,13 +12,13 @@ void init_keyboard()
     curs_set(FALSE);
 }
 
-int case_select(int ch, struct coordonnee *C_Matrice, int (*g_matrice)[NB_BOX_H], int (*p_matrice)[NB_BOX_H])
+int case_select(int ch, struct coordonnee *C_Matrice, struct case_ (*g_matrice)[NB_BOX_H], struct case_ (*p_matrice)[NB_BOX_H])
 {
-    if(p_matrice[C_Matrice->abscisse][C_Matrice->ordonnee] == UNKNOWN)
+    if(p_matrice[C_Matrice->abscisse][C_Matrice->ordonnee].type == UNKNOWN)
         color_selected_box(C_Matrice->abscisse, C_Matrice->ordonnee, WHITE_BLACK);
-    else if(p_matrice[C_Matrice->abscisse][C_Matrice->ordonnee] == MINE)
+    else if(p_matrice[C_Matrice->abscisse][C_Matrice->ordonnee].type == MINE)
         color_selected_box(C_Matrice->abscisse, C_Matrice->ordonnee, RED_BLACK);
-    else if(p_matrice[C_Matrice->abscisse][C_Matrice->ordonnee] == KNOWN)
+    else if(p_matrice[C_Matrice->abscisse][C_Matrice->ordonnee].type == KNOWN)
         color_selected_box(C_Matrice->abscisse, C_Matrice->ordonnee, BLUE_BLACK);
 
     switch (ch)
@@ -28,7 +28,7 @@ int case_select(int ch, struct coordonnee *C_Matrice, int (*g_matrice)[NB_BOX_H]
         break;
 
     case ' ':
-        if(g_matrice[C_Matrice->abscisse][C_Matrice->ordonnee] == MINE)
+        if(g_matrice[C_Matrice->abscisse][C_Matrice->ordonnee].type == MINE)
         {
             print_mine(g_matrice);
             char c = getch();
@@ -36,9 +36,9 @@ int case_select(int ch, struct coordonnee *C_Matrice, int (*g_matrice)[NB_BOX_H]
             print_end_message(LOSE);
             return 1;
         }
-        else if(g_matrice[C_Matrice->abscisse][C_Matrice->ordonnee] == KNOWN)
+        else if(g_matrice[C_Matrice->abscisse][C_Matrice->ordonnee].type == KNOWN)
         {
-            p_matrice[C_Matrice->abscisse][C_Matrice->ordonnee] = KNOWN;
+            p_matrice[C_Matrice->abscisse][C_Matrice->ordonnee].type = KNOWN;
             color_selected_box(C_Matrice->abscisse, C_Matrice->ordonnee, BLUE_BLACK);
             return 0;
         }
@@ -81,18 +81,18 @@ int case_select(int ch, struct coordonnee *C_Matrice, int (*g_matrice)[NB_BOX_H]
     return 0;
 }
 
-void init_player_matrice(int (*player_matrice)[NB_BOX_H])
+void init_player_matrice(struct case_ (*player_matrice)[NB_BOX_H])
 {
     for(int i = 0; i < NB_BOX_W; i++)
     {
         for(int j = 0; j < NB_BOX_H; j++)
         {
-            player_matrice[i][j] = UNKNOWN;
+            player_matrice[i][j].type = UNKNOWN;
         }
     }
 }
 
-void init_game_matrice(int (*game_matrice)[NB_BOX_H])
+void init_game_matrice(struct case_ (*game_matrice)[NB_BOX_H])
 {
     srand(time(NULL));   // Initialisation pour la generation de nombres aleatoires
 
@@ -100,7 +100,7 @@ void init_game_matrice(int (*game_matrice)[NB_BOX_H])
     {
         for(int j = 0; j < NB_BOX_H; j++)
         {
-            game_matrice[i][j] = KNOWN;
+            game_matrice[i][j].type = KNOWN;
         }
     }
 
@@ -111,9 +111,9 @@ void init_game_matrice(int (*game_matrice)[NB_BOX_H])
         {
             r1 = rand() % NB_BOX_W;
             r2 = rand() % NB_BOX_H;
-            if(game_matrice[r1][r2] == KNOWN) // Generation aleatoire des coordonnees des NB_MINE 
+            if(game_matrice[r1][r2].type == KNOWN) // Generation aleatoire des coordonnees des NB_MINE 
             {
-                game_matrice[r1][r2] = MINE;
+                game_matrice[r1][r2].type = MINE;
                 break;
             }
             else

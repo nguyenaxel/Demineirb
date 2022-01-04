@@ -12,8 +12,9 @@ int main(int argc, char *argv[])
     // Initialisation des variables
     int ch; // Charactere clavier lu
     struct coordonnee C_Matrice = {0,0};    // Coordonnees curseur
-    int player_matrice[NB_BOX_W][NB_BOX_H]; // Matrice vu par le joueur
-    int game_matrice[NB_BOX_W][NB_BOX_H];   // Matrice vu par le jeu
+    struct case_ player_matrice[NB_BOX_W][NB_BOX_H]; // Matrice vu par le joueur
+    struct case_ game_matrice[NB_BOX_W][NB_BOX_H];   // Matrice vu par le jeu
+    mine_left = NB_MINE;
 
     // Initialisation de l'affichage
     struct dimension dim = initialize_screen();

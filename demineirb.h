@@ -25,4 +25,12 @@ struct coordonnee
     int ordonnee;
 };
 
+struct case_
+{
+    int type;
+    int nb_mine_around;
+};
+
+int mine_left;
+
 #endif
