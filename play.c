@@ -39,8 +39,37 @@ int case_select(int ch, struct coordonnee *C_Matrice, struct case_ (*g_matrice)[
         else if(g_matrice[C_Matrice->abscisse][C_Matrice->ordonnee].type == KNOWN)
         {
             p_matrice[C_Matrice->abscisse][C_Matrice->ordonnee].type = KNOWN;
+            mvprintw(C_Matrice->ordonnee*5+3, C_Matrice->abscisse*9+5, "%d", g_matrice[C_Matrice->abscisse][C_Matrice->ordonnee].nb_mine_around);
             color_selected_box(C_Matrice->abscisse, C_Matrice->ordonnee, BLUE_BLACK);
             return 0;
+        }
+        break;
+
+    case 'm':
+        if(g_matrice[C_Matrice->abscisse][C_Matrice->ordonnee].type != MINE)
+        {
+            print_mine(g_matrice);
+            char c = getch();
+            delete_board();
+            print_end_message(LOSE);
+            return 1;
+        }
+        else
+        {
+            mvprintw(C_Matrice->ordonnee*5+3, C_Matrice->abscisse*9+5, "M");
+            color_selected_box(C_Matrice->abscisse, C_Matrice->ordonnee, RED_BLACK);
+            mine_left--;
+            for(int i = 0; i < 15; i++)
+                mvdelch(52, 2);
+            mvprintw(52, 2, "Mine left : %d", mine_left);
+            p_matrice[C_Matrice->abscisse][C_Matrice->ordonnee].type = MINE;
+
+            if(mine_left == 0)
+            {
+                delete_board();
+                print_end_message(WIN);
+                break;
+            }
         }
         break;
 
@@ -101,6 +130,7 @@ void init_game_matrice(struct case_ (*game_matrice)[NB_BOX_H])
         for(int j = 0; j < NB_BOX_H; j++)
         {
             game_matrice[i][j].type = KNOWN;
+            game_matrice[i][j].nb_mine_around = 0;
         }
     }
 
@@ -113,7 +143,35 @@ void init_game_matrice(struct case_ (*game_matrice)[NB_BOX_H])
             r2 = rand() % NB_BOX_H;
             if(game_matrice[r1][r2].type == KNOWN) // Generation aleatoire des coordonnees des NB_MINE 
             {
+                if(r1 > 0)
+                {
+                    game_matrice[r1-1][r2].nb_mine_around++;
+
+                    if(r2 > 0)
+                        game_matrice[r1-1][r2-1].nb_mine_around++;
+
+                    if(r2 < NB_BOX_H)
+                        game_matrice[r1-1][r2+1].nb_mine_around++;
+                }
+                if(r1 < NB_BOX_W)
+                {
+                    game_matrice[r1+1][r2].nb_mine_around++;
+
+                    if(r2 > 0)
+                        game_matrice[r1+1][r2-1].nb_mine_around++;
+
+                    if(r2 < NB_BOX_H-1)
+                        game_matrice[r1+1][r2+1].nb_mine_around++;
+                }
+                if(r2 > 0)
+                {
+                    game_matrice[r1][r2-1].nb_mine_around++;
+                    if(r2 < NB_BOX_H-1)
+                        game_matrice[r1][r2+1].nb_mine_around++;
+                }
+
                 game_matrice[r1][r2].type = MINE;
+
                 break;
             }
             else
